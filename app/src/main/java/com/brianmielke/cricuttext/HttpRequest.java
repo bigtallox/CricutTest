@@ -120,7 +120,6 @@ public class HttpRequest extends AsyncTask<String, Void, String>
 
             conn.setRequestProperty("Content-type","application/json");
             conn.setRequestProperty("Accept","application/json");
-            conn.setRequestProperty("X-CustomerId","04836556-3baa-433c-9686-bf9de6be7493");
 
             if ( authorization != null )
             {

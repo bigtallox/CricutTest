@@ -81,8 +81,8 @@ public class YahooWeatherActivity extends AppCompatActivity
 
 
                     description.setText(channel.getString("description"));
-                    conditions.setText(condition.getString("temp") + "f " + condition.getString("text"));
-                    conditions2.setText(condition.getString("date"));
+                    conditions2.setText(condition.getString("temp") + "f " + condition.getString("text"));
+                    conditions.setText(condition.getString("date"));
                     ForecastAdapter adapter = new ForecastAdapter(YahooWeatherActivity.this,forecast,urlImagePrefix);
                     listView.setAdapter(adapter);
                 }
