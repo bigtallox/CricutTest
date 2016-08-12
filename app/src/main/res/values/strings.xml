@@ -2,7 +2,20 @@
     <string name="app_name">CricutTest - Brian Mielke</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_forecast_detail">ForecastDetailActivity</string>
+    <string name="high_label">High</string>
+    <string name="low_label">Low</string>
 
+    <string name="string_string_format">%1$s %2$s</string>
+
+    <string name="background_description">background image</string>
+    <string name="back_description">back</string>
+    <string name="weather_icon_description">weather icon</string>
+    <string name="upbutton_description">up button</string>
+
+    <string name="back">back</string>
+    <string name="label">Label</string>
+    <string name="forecast">Forecast</string>
+    <string name="placeholder">placeholder</string>
     <!--
     <yahoo-weather-codes>
         <code number="0" description="tornado"/>

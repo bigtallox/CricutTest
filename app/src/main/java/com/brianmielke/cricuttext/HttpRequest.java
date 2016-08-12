@@ -2,13 +2,9 @@ package com.brianmielke.cricuttext;
 
 import android.os.AsyncTask;
 
-import org.json.JSONObject;
-
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Scanner;
@@ -20,20 +16,20 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+// A class to perform HTTP requests.  Why use a library when you can implement it yourself!
 public class HttpRequest extends AsyncTask<String, Void, String>
 {
     private static final String TAG = "HTTP_TASK";
 
-    protected String endpoint;
-    protected String paramString;
-    protected JSONObject rootNode;
-    protected String method;
+    final protected String endpoint;
+    final protected String paramString;
+    final protected String method;
     protected String responseStr;
     public Exception exception;
     protected String authorization;
-    protected HttpTaskHandler taskHandler;
+    final protected HttpTaskHandler taskHandler;
 
-    public static interface HttpTaskHandler
+    public interface HttpTaskHandler
     {
         void requestSuccessful(String jsonString);
         void requestFailed(Exception e);
@@ -45,13 +41,11 @@ public class HttpRequest extends AsyncTask<String, Void, String>
                        HttpTaskHandler taskHandler)
     {
         this.endpoint = endpoint;
-
         this.paramString = paramString;
         this.method = method;
         this.taskHandler = taskHandler;
         this.authorization =null;
     }
-
 
     public void setAuthorization( String authorization )
     {
@@ -62,7 +56,7 @@ public class HttpRequest extends AsyncTask<String, Void, String>
     {
         URL url;
 
-        responseStr = new String();
+        responseStr = "";
 
         TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager()
         {
@@ -83,20 +77,17 @@ public class HttpRequest extends AsyncTask<String, Void, String>
         }};
 
         // Install the all-trusting trust manager
-        SSLContext sc = null;
-        try {
-        sc = SSLContext.getInstance("SSL");
-        sc.init(null, trustAllCerts, new java.security.SecureRandom());
-        }
-        catch (NoSuchAlgorithmException e1)
+        SSLContext sc;
+        try
         {
-            e1.printStackTrace();
+            sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
         }
-        catch (KeyManagementException e1)
+        catch(Exception e)
         {
-            e1.printStackTrace();
+            e.printStackTrace();
         }
-        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
         // Create all-trusting host name verifier
         HostnameVerifier allHostsValid = new HostnameVerifier()
@@ -111,7 +102,7 @@ public class HttpRequest extends AsyncTask<String, Void, String>
         // Install the all-trusting host verifier
         HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 
-        HttpURLConnection conn = null;
+        HttpURLConnection conn;
         try
         {
             url=new URL(endpoint);
@@ -126,7 +117,7 @@ public class HttpRequest extends AsyncTask<String, Void, String>
                 conn.setRequestProperty("Authorization", authorization);
             }
 
-            if ( method == "POST" )
+            if ( method.equals("POST") )
             {
                 conn.setDoOutput(true);
             }
@@ -182,9 +173,10 @@ public class HttpRequest extends AsyncTask<String, Void, String>
             if (result != null)
             {
                 taskHandler.requestSuccessful(result);
-            } else
+            }
+            else
             {
-                taskHandler.requestFailed(this.exception);
+                taskHandler.requestFailed(new Exception());
             }
         }
         else
@@ -192,6 +184,5 @@ public class HttpRequest extends AsyncTask<String, Void, String>
             taskHandler.requestFailed(this.exception);
         }
     }
-
 
 }

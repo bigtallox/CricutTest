@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,7 +24,6 @@ public class YahooWeatherActivity extends AppCompatActivity
     private TextView description;
     private TextView conditions;
     private TextView conditions2;
-    private ImageView background;
 
     public final static String EXTRA_MESSAGE = "com.brianmielke.message";
     public final static String URL_PREFIX = "com.brianmielke.urlprefix";
@@ -42,7 +41,7 @@ public class YahooWeatherActivity extends AppCompatActivity
         description = (TextView) findViewById(R.id.description);
         conditions = (TextView) findViewById(R.id.conditions);
         conditions2 = (TextView) findViewById(R.id.conditions2);
-        background = (ImageView) findViewById(R.id.background);
+        //ImageView background = (ImageView) findViewById(R.id.background);
 
         final ProgressDialog pd= new ProgressDialog(this);
         pd.setMessage("Loading");
@@ -60,14 +59,14 @@ public class YahooWeatherActivity extends AppCompatActivity
                     JSONObject channel = new JSONObject(jsonString).getJSONObject("query").getJSONObject("results").getJSONObject("channel");
                     JSONArray forecast = channel.getJSONObject("item").getJSONArray("forecast");
                     JSONObject condition = channel.getJSONObject("item").getJSONObject("condition");
-                    JSONObject atmosphere = channel.getJSONObject("atmosphere");
+                    //JSONObject atmosphere = channel.getJSONObject("atmosphere");
 
-                    // get the url to the images for the detail view...
+                    // get the url to the images for the detail view, so it can be bassed to the adapter
                     String imageLink = channel.getJSONObject("item").getString("description");
                     String pattern =  "<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>";
                     Pattern r = Pattern.compile(pattern);
                     Matcher m = r.matcher(imageLink);
-                    String urlImagePrefix = "";
+                    String urlImagePrefix;
                     if (m.find( ))
                     {
                         String found = m.group(0);
@@ -88,7 +87,7 @@ public class YahooWeatherActivity extends AppCompatActivity
                 }
                 catch (JSONException je)
                 {
-
+                    Log.d("cricut", "json exception = " + je.toString());
                 }
             }
 

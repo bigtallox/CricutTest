@@ -14,6 +14,7 @@
     tools:showIn="@layout/activity_main">
 
     <ImageView
+        android:contentDescription="@string/background_description"
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -39,7 +40,7 @@
         android:layout_below="@+id/conditions"/>
 
     <TextView
-        android:text="Forecast"
+        android:text="@string/forecast"
         android:id="@+id/forecastLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,6 +50,6 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/forecastLabel"></ListView>
+        android:layout_below="@+id/forecastLabel"/>
 
 </RelativeLayout>

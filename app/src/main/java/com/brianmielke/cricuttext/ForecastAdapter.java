@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -19,10 +18,10 @@ import org.json.JSONObject;
 
 public class ForecastAdapter extends BaseAdapter
 {
-    JSONArray items;
-    LayoutInflater mInflater;
-    Context context;
-    String urlImagePrefix;
+    final private JSONArray items;
+    final private LayoutInflater mInflater;
+    final private Context context;
+    final private String urlImagePrefix;
 
     public ForecastAdapter(Context context, JSONArray items, String urlImagePrefix)
     {
@@ -52,7 +51,6 @@ public class ForecastAdapter extends BaseAdapter
     public View getView(final int position, View convertView, ViewGroup parent)
     {
         final ViewHolder holder;
-        final ForecastAdapter parentAdapter = this;
 
         if(convertView ==null)
         {
@@ -61,7 +59,7 @@ public class ForecastAdapter extends BaseAdapter
             holder.day = (TextView) convertView.findViewById(R.id.day);
             holder.highLow = (TextView) convertView.findViewById(R.id.highLow);
             holder.forecast = (TextView) convertView.findViewById(R.id.forecast);
-            holder.container = (LinearLayout) convertView.findViewById(R.id.container);
+            //holder.container = (LinearLayout) convertView.findViewById(R.id.container);
             convertView.setTag(holder);
             holder.button = (ImageView) convertView.findViewById(R.id.upButton);
             holder.weatherIcon = (ImageView) convertView.findViewById(R.id.weatherIcon);
@@ -74,11 +72,14 @@ public class ForecastAdapter extends BaseAdapter
         try
         {
             final JSONObject obj = items.getJSONObject(position);
-            holder.day.setText(obj.getString("day") + " " + obj.getString("date"));
+
+            holder.day.setText(context.getString(R.string.string_string_format,
+                    obj.getString("day"), obj.getString("date")) );
+
             holder.highLow.setText(obj.getString("high") + "f / " + obj.getString("low") + "f");
             holder.forecast.setText(obj.getString("text"));
 
-            String imageUrl = urlImagePrefix + "/" + obj.getString("code") + ".gif";
+            //String imageUrl = urlImagePrefix + "/" + obj.getString("code") + ".gif";
             Picasso.with(YahooWeatherActivity.instance)
                     .load(urlImagePrefix + "/" + obj.getString("code") + ".gif")
                     .resize(100,100)
@@ -112,7 +113,7 @@ public class ForecastAdapter extends BaseAdapter
         TextView highLow;
         TextView day;
         TextView forecast;
-        LinearLayout container;
+        //LinearLayout container;
         ImageView button;
         ImageView weatherIcon;
     }

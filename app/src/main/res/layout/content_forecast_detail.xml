@@ -15,12 +15,13 @@
     android:background="@android:color/darker_gray">
 
     <ImageView
+        android:contentDescription="@string/back_description"
         android:id="@+id/back"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="back"
+        android:text="@string/back"
         android:src="@drawable/back_arrow"/>
 
     <LinearLayout
@@ -34,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:text="Label"
+            android:text="@string/label"
             android:textColor="@android:color/white"
             />
 
@@ -43,11 +44,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="Message Text"
+            android:text="@string/placeholder"
             android:textColor="@android:color/white"
             />
 
         <ImageView
+            android:contentDescription="@string/weather_icon_description"
             android:id="@+id/weatherIcon"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
@@ -57,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="Message Text"
+            android:text="@string/placeholder"
             android:textColor="@android:color/white"
             />
 
